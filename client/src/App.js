@@ -14,47 +14,36 @@ const App = () => {
       .then(res => setData(res.data))
   };
 
-  async function buyProduct() {
-    await fetch("api/data/checkout", {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify(data.data[0]),
-     })
-  }
-
   useEffect(() => {
     fetchProduct()
   }, []);
 
   return (
     <div>
-      {data.data ?
+      {data.image ?
         <div className="container">
           <MDBCol style={{ maxWidth: "75rem" }}>
             <div className="top-row">
               <MDBCol style={{ maxWidth: "22rem" }}>
-                <MDBCard>
-                  <MDBCardImage 
+                <MDBCard title="S-Works Stumpjumper 29">
+                  <MDBCardImage
                     className="img-fluid" 
                     id="image" 
-                    src={data.data[0].primary_image.url_standard} 
+                    src={data.image} 
                     waves 
+
                   />
                 </MDBCard>
               </MDBCol>
               <div className="details">
-                <h4><b>{data.data[0].name}</b></h4>
-                <div>Specialized</div>
+                <h4><b>{data.name}</b></h4>
+                <div>{data.brand}</div>
                 <br/>
-                <h5><b>${data.data[0].price}</b></h5>
+                <h5><b>${data.price}</b></h5>
                 <MDBBtn 
                   gradient="aqua" 
                   id="button" 
                   style={{ width: "8rem" }}
-                  onClick={buyProduct}
                   href="https://trailtoad.mybigcommerce.com/cart.php?action=buy&sku=SKU-112&source=buy_button"
                 >
                   Buy Now
@@ -63,7 +52,7 @@ const App = () => {
             </div>  
             <div className="description">
               <h5><b>Description:</b></h5>
-              {ReactHtmlParser(data.data[0].description)}
+              {ReactHtmlParser(data.description)}
             </div>
           </MDBCol>
         </div>
@@ -72,7 +61,6 @@ const App = () => {
           </div>
         }
     </div>
-    
   );
 }
 
